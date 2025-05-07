@@ -1,5 +1,7 @@
 package remer.products;
 
+import io.reactivex.rxjava3.annotations.NonNull;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +14,7 @@ public class ProductsController
 {
     private final ProductsService service;
     private final JLabel[] imageLabels;
-    private Product[] products;
+    private @NonNull ProductsResponse products;
 
     public ProductsController(ProductsService service, JLabel[] images)
     {
@@ -24,8 +26,7 @@ public class ProductsController
     {
         // get the response object
         ProductsResponse products = service.getProducts().blockingGet();
-        // extract the array from the response
-        this.products = products.products;
+        this.products = service.getProducts().blockingGet();
 
         for (int i = 0; i < 9; i++)
         {
